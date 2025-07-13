@@ -9,8 +9,8 @@ import { AuthContext } from "@/context/AuthContext";
 
 export default function Login() {
   const { setUser } = useContext(AuthContext);
-  const [email, setEmail] = useState("7836020160s@gmail.com");
-  const [password, setPassword] = useState("7836020160s@");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
