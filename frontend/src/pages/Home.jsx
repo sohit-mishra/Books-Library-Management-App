@@ -4,6 +4,7 @@ import BookCard from "@/components/BookCard";
 import { AuthContext } from "@/context/AuthContext";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Separator } from "@/components/ui/separator";
+import { toast } from 'sonner';
 
 export default function Home() {
   const [books, setBooks] = useState([]);
@@ -12,7 +13,7 @@ export default function Home() {
 
   useEffect(() => {
     api
-      .get("/books")
+      .get("/api/books")
       .then((res) => setBooks(res.data))
       .catch((err) => console.error("Error loading books:", err))
       .finally(() => setLoading(false));
@@ -20,10 +21,10 @@ export default function Home() {
 
   const handleAdd = async (book) => {
     try {
-      await api.post("/mybooks", { bookId: book._id });
-      alert(`${book.title} added to your library.`);
+      await api.post(`/api/mybooks/${book._id}`,);
+      toast.success(`${book.title} added to your library.`);
     } catch {
-      alert("Failed to add book.");
+      toast.error("Please log in first.");
     }
   };
 

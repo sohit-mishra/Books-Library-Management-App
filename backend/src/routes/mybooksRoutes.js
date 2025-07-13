@@ -8,7 +8,7 @@ const {
 } = require("@/controllers/MyBookController");
 const auth = require("@/middlewares/authMiddleware");
 
-router.get("", auth, UserBooks);
+router.get("/", auth, UserBooks);
 router.post("/:bookId", auth, AddUserBooks);
 router.patch("/:bookId/status", auth, UpdateReadingStatus);
 router.patch("/:bookId/rating", auth, BookRating);

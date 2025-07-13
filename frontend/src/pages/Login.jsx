@@ -1,29 +1,33 @@
 import { useState, useContext } from "react";
-import { AuthContext } from "@/context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
+import api from "@/api";
+import { toast } from 'sonner';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { AuthContext } from "@/context/AuthContext";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const { login } = useContext(AuthContext);
+  const { setUser } = useContext(AuthContext);
+  const [email, setEmail] = useState("7836020160s@gmail.com");
+  const [password, setPassword] = useState("7836020160s@");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+     e.preventDefault();
     try {
-      await login(email, password);
+      const res = await api.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, { email, password });
+      toast.success("Login successfully!");
+      setUser(res.data.user)
       navigate("/");
     } catch (err) {
       console.error("Login failed", err);
-      alert("Login failed. Please check your credentials.");
+      toast.error("Login failed. Please try again.");
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen px-4">
+    <div className="flex justify-center items-center min-h-[700px] px-4">
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle className="text-center text-2xl">Login</CardTitle>

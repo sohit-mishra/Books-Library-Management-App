@@ -8,7 +8,7 @@ export const AuthProvider = ({ children }) => {
 
   const fetchUser = async () => {
     try {
-      const res = await api.get('/auth/me');
+      const res = await api.get('/api/auth/me');
       setUser(res.data);
     } catch {
       setUser(null);
@@ -19,23 +19,14 @@ export const AuthProvider = ({ children }) => {
     fetchUser();
   }, []);
 
-  const login = async (email, password) => {
-    const res = await api.post('/auth/login', { email, password });
-    setUser(res.data.user);
-  };
-
-  const register = async (email, password) => {
-    const res = await api.post('/auth/register', { email, password });
-    setUser(res.data.user);
-  };
 
   const logout = async () => {
-    await api.get('/auth/logout');
+    await api.get('/api/auth/logout');
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout }}>
+    <AuthContext.Provider value={{ user, setUser, logout }}>
       {children}
     </AuthContext.Provider>
   );
